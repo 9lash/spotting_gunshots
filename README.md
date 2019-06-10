@@ -2,7 +2,7 @@
 Framework for machine learning projects at Insight Data Science.
 
 ## Motivation for this project format:
-- **Insight_Project_Framework** : Put all source code for production within structured directory
+- **spotting_gunshots_Framework** : Put all source code for production within structured directory
 - **tests** : Put all source code for testing in an easy to find location
 - **configs** : Enable modification of all preset variables within single directory (consisting of one or many config files for separate tasks)
 - **data** : Include example a small amount of data in the Github repository so tests can be run to validate installation
