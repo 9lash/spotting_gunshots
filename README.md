@@ -1,4 +1,4 @@
-# Insight_Project_Framework
+# spotting_gunshots_Framework
 Framework for machine learning projects at Insight Data Science.
 
 ## Motivation for this project format:
