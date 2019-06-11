@@ -1,5 +1,18 @@
 # spotting_gunshots_Framework
-AudioSet consists of an expanding ontology of 632 audio event classes and a collection of 2,084,320 human-labeled 10-second sound clips drawn from YouTube videos. This project focuses on using this dataset to train a simplistic classifer and a deep learning model with this dataset to detect gunshots against other sounds like fireworks, background and other extraneous noises.  
+AudioSet consists of an expanding ontology of 632 audio event classes and a collection of 2,084,320 human-labeled 10-second sound clips drawn from YouTube videos. This project focuses on using this dataset to train a simplistic classifer and a deep learning model with this dataset to detect gunshots against other sounds like fireworks, background and other extraneous noises.
+
+# Week 1 Objectives: 
+ - script which organizes/ resizes the pre-processed training, evaluation and test set
+ 
+- load this dataset into S3 bucket
+
+- script which uses this dataset and trains an LSTM model 
+
+- script which feeds the raw audio sample to a pre-processing stage [raw data is converted into mel-frequency ceptrum representation]
+
+- Have the pre-trained VGGish ready in my repo to accept the pre-processed audio file 
+
+
 
 ## Motivation for this project format:
 - **spotting_gunshots_Framework** : Put all source code for production within structured directory
