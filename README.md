@@ -14,6 +14,11 @@ AudioSet consists of an expanding ontology of 632 audio event classes and a coll
 
 
 
+
+
+
+/**************************************************************************************************/
+The below is the Insight Template for reference.
 ## Motivation for this project format:
 - **spotting_gunshots_Framework** : Put all source code for production within structured directory
 - **tests** : Put all source code for testing in an easy to find location
