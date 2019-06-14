@@ -1,0 +1,21 @@
+# To install these Python dependencies, please type:
+# pip install -r requirements.txt
+
+streamlit
+
+tensorflow==1.2.1
+six==1.11.0
+matplotlib==2.0.2
+numpy==1.13.1
+Keras==2.0.6
+pandas==0.20.3
+scipy==0.19.1
+phue==1.0
+plotly==2.5.1
+dash==0.21.0
+dash_core_components==0.22.1
+dash_html_components==0.10.0
+pyaudio==0.2.11
+resampy==0.2.0
+h5py==2.7.1
+dash-renderer==0.12.1
