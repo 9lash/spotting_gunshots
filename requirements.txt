@@ -19,3 +19,4 @@ pyaudio==0.2.11
 resampy==0.2.0
 h5py==2.7.1
 dash-renderer==0.12.1
+bitstring

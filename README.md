@@ -1,22 +1,22 @@
 # spotting_gunshots_Framework
-<<<<<<< HEAD
-AudioSet consists of an expanding ontology of 632 audio event classes and a collection of 2,084,320 human-labeled 10-second sound clips drawn from YouTube videos. This project focuses on using this dataset to train a simplistic classifer and a deep learning model with this dataset to detect gunshots against other sounds like fireworks, background and other extraneous noises.  
 
-=======
 AudioSet consists of an expanding ontology of 632 audio event classes and a collection of 2,084,320 human-labeled 10-second sound clips drawn from YouTube videos. This project focuses on using this dataset to train a simplistic classifer and a deep learning model with this dataset to detect gunshots against other sounds like fireworks, background and other extraneous noises.
 
-# Week 1 Objectives: 
- - script which organizes/ resizes the pre-processed training, evaluation and test set
- 
-- load this dataset into S3 bucket
+Google AI has created a large scale compilation of audio dataset which are annotated with labels of the events that occur in the audio dataset. This dataset can be downloaded into two forms: 
 
-- script which uses this dataset and trains an LSTM model 
+	1. CSV containing the Youtube ID of the audio clip and the labels annotated in the clip.
+	2. Audio Embeddings of each clip annotated with the event labels present in the clip.
 
-- script which feeds the raw audio sample to a pre-processing stage [raw data is converted into mel-frequency ceptrum representation]
+## Audio Embeddings: 
+The audio embedding that are provided in the dataset are basically the representation of a audio clip in a reduced dimension. For instance, if an audio file of 10 seconds long is recorded at 1000 bits/sec resolution, the audio embedding representation would be a 10 feature vectors for every second in the clip. Each feature vector contains 128 8bit numbers. This audio embedding featurization was produced by a VGG like model, where the model accepts a audio .wav file, performs mel-spectrum featurization and runs a sequence of convolutional layers to produce the above audio embeddings. 
 
-- Have the pre-trained VGGish ready in my repo to accept the pre-processed audio file 
+# Setup
 
+Clone repository
 
+First, install the python requirements: pip install -r requirements.txt
+
+You will then need to download vggish_model.ckpt & VGG_PCA_Parameters from AudioSet and move it to the audioset directory present inside the src directory to run the vggish model. The link for the download is here: 
 
 
 
@@ -24,7 +24,6 @@ AudioSet consists of an expanding ontology of 632 audio event classes and a coll
 ```
 The below is the Insight Template for reference.
 ```
->>>>>>> ca059fd2f1ff500c00fd3212f62950c2e9109d79
 ## Motivation for this project format:
 - **spotting_gunshots_Framework** : Put all source code for production within structured directory
 - **tests** : Put all source code for testing in an easy to find location
@@ -34,7 +33,12 @@ The below is the Insight Template for reference.
 - **static** : Any images or content to include in the README or web framework if part of the pipeline
 
 ## Setup
+
 Clone repository and update python path
+
+
+
+
 ```
 repo_name=Insight_Project_Framework # URL of your new repository
 username=mrubash1 # Username for your personal github account
