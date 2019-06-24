@@ -8,17 +8,18 @@ Google AI has created a large scale compilation of audio dataset which are annot
 	2. Audio Embeddings of each clip annotated with the event labels present in the clip.
 
 ## Audio Embeddings: 
-The audio embedding that are provided in the dataset are basically the representation of a audio clip in a reduced dimension. For instance, if an audio file of 10 seconds long is recorded at 1000 bits/sec resolution, the audio embedding representation would be a 10 feature vectors for every second in the clip. Each feature vector contains 128 8bit numbers. This audio embedding featurization was produced by a VGG like model, where the model accepts a audio .wav file, performs mel-spectrum featurization and runs a sequence of convolutional layers to produce the above audio embeddings. 
+The audio embedding that are provided in the dataset are basically the representation of a audio clip in a reduced dimension. For instance, if an audio file of 10 seconds long is recorded at 1000 bits/sec resolution, the audio embedding representation would be a 10 feature vectors for every second in the clip. Each feature vector contains 128 8bit numbers. This audio embedding featurization was produced by a VGG like model, where the model accepts an audio .wav file, performs mel-spectrum featurization and runs a sequence of convolutional layers to produce the above audio embeddings. 
 
 # Setup
 
 Clone repository
 
-First, install the python requirements: pip install -r requirements.txt
+1. Install the python requirements: pip install -r requirements.txt
 
-You will then need to download vggish_model.ckpt & VGG_PCA_Parameters from AudioSet and move it to the audioset directory present inside the src directory to run the vggish model. The link for the download is here: 
+2. You will then need to download vggish_model.ckpt & VGG_PCA_Parameters from *here* and move it to src/audioset_VGG/ to run the vggish model. The link for the download is here: 
 
-
+Vggish_model.ckpt = https://storage.googleapis.com/audioset/vggish_model.ckpt , in Tensorflow checkpoint format
+VGG_PCA_Parameters = https://storage.googleapis.com/audioset/vggish_pca_params.npz , in Numpy compressed archive format
 
 
 ```
@@ -74,6 +75,10 @@ git push origin $branch_name
 
 - List all packages and software needed to build the environment
 - This could include cloud command line tools (i.e. gsutil), package managers (i.e. conda), etc.
+- python 3.0 or above
+- conda 4.6.14 preferred 
+
+
 
 #### Dependencies
 
