@@ -19,6 +19,22 @@ First, install the python requirements: pip install -r requirements.txt
 You will then need to download vggish_model.ckpt & VGG_PCA_Parameters from AudioSet and move it to the audioset directory present inside the src directory to run the vggish model. The link for the download is here: 
 
 
+# audiosetfeatures_rev2.ipynb
+
+## Creating a subset dataset
+
+
+# bal_spotting_gunshots_subset.tfrecord 
+This training subset contains 1594 samples of gunshots, 1594 samples of glass break, 1594 samples of firework audio embeddings. Total training set =  4782 samples equally distributed. 
+
+This training dataset is constructed keeping in mind that samples in raw dataset could contain co-occurence of all three labels. To handle this, gunshot samples were selected such that the clip contains gun class label and does not contain glass & firework class. Each sample is thus, mutually exclusive in the training dataset. 
+
+
+# eval_spotting_gunshots_subset.tfrecord
+
+This evaluation dataset contains 161 samples of each glass, gunshots and firework class. Total size of eval set = 483 samples. 
+
+
 
 
 ```
