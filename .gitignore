@@ -2,5 +2,5 @@ data/
 
 *.h5
 *.DS_Store
-vggish_model.ckpt
-vggish_pca_params.npz
+src/VGGish/vggish_model.ckpt
+src/VGGish/vggish_pca_params.npz
