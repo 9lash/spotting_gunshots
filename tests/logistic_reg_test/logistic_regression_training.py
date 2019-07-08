@@ -1,7 +1,7 @@
 # Logistic Regression Model training
 
 
-# %matplotlib inline
+#matplotlib inline
 import matplotlib.pyplot as plt
 plt.rcParams['figure.figsize'] = (12,8)
 import numpy as np
@@ -61,9 +61,8 @@ def data_generator(batch_size, tfrecord, start_frac=0, end_frac=1):
             n_frames = len(tf_seq_example.feature_lists.feature_list['audio_embedding'].feature)
             audio_frame = []
             for i in range(n_frames):
-                # audio_frame gets 128 8 bit numbers on each for loop iteration
                 audio_frame.append(np.frombuffer(tf_seq_example.feature_lists.feature_list['audio_embedding'].
-                                                         feature[i].bytes_list.value[0],np.uint8).astype(np.float32)) 
+                                                         feature[i].bytes_list.value[0],np.uint8).astype(np.float32)) # audio_frame gets 128 8 bit numbers on each for loop iteration
             pad = [np.zeros([128], np.float32) for i in range(max_len-n_frames)] 
             # if clip is less than 10 sec, audio_frame is padded with zeros for 
             # rest of the secs to make it to 10 sec.
@@ -100,16 +99,16 @@ def trainer(train_tfrecord, train_lr, train_epochs):
     # Hyperparameters : Epochs = train_epochs, batch_size = 40, learning rate = train_lr
     batch_size=  40 
     CV_frac = 0.1
-    train_gen = data_generator(batch_size, train_tfrecord, 0, 1-CV_frac)
-    val_gen = data_generator(20, train_tfrecord, 1-CV_frac, 1)
+    train_gen = data_generator(batch_size,train_tfrecord, 0, 1-CV_frac)
+    val_gen = data_generator(20,train_tfrecord, 1-CV_frac, 1)
     rec_len = 17662 
-    lr_h = lr_model.fit_generator(train_gen, steps_per_epoch=int(rec_len*(1-CV_frac))//batch_size, epochs=train_epochs,validation_data=val_gen, validation_steps=int(rec_len*CV_frac)//20,verbose=1, callbacks=[TQDMNotebookCallback()])
+    lr_h = lr_model.fit_generator(train_gen,steps_per_epoch=int(rec_len*(1-CV_frac))//batch_size, epochs=train_epochs,validation_data=val_gen, validation_steps=int(rec_len*CV_frac)//20,verbose=1, callbacks=[TQDMNotebookCallback()])
     
     #Save the model architecture image always at same path
-    plot_model(lr_model, to_file='results/LogisticReg/model_LogisticRegression_BinaryCE_Adam_lr={}_Epochs{}.png'.format(train_lr, train_epochs))
+    plot_model(lr_model, to_file='model_LogisticRegression_BinaryCE_Adam_lr={}_Epochs{}.png'.format(train_lr, train_epochs))
 
     #Save the model at the same path
-    lr_model.save('models/LogisticRegression_BinCE_Adam_lr={}_Epochs={}.h5'.format(train_lr,train_epochs))
+    lr_model.save('LogisticRegression_BinCE_Adam_lr={}_Epochs={}.h5'.format(train_lr,train_epochs))
     return lr_h
 
 
@@ -117,13 +116,13 @@ def trainer(train_tfrecord, train_lr, train_epochs):
 if __name__ == "__main__":
     
     #setting hyperparameters
-    train_path = '../data/preprocessed/bal_gunspotting_in_school_subset.tfrecord'
-    epochs = 10
+    train_path = '../../data/preprocessed/bal_gunspotting_in_school_subset.tfrecord'
+    epochs = 2
     learning_rate = 0.1
 
     print("Training Logistic Regression:")
  
-    #train logistic regression with learn rate = 0.1 and epochs 10
+    #train logistic regression with learn rate = 0.1 and epochs 50
     lr_h = trainer(train_path, learning_rate, epochs)
 
     #plotting the Training accuracy, Validation Accuracy for Logistic Regression 
@@ -132,10 +131,14 @@ if __name__ == "__main__":
     plt.xlabel('Epochs({})'.format(epochs), size=20)
     plt.ylabel('Accuracy', size=20)
     plt.legend()
-    plt.savefig('results/LogisticReg/LogisticRegression_BinCEAdam_lr={}_Epochs{}.png'.format(learning_rate, epochs), dpi = 300)
+    plt.savefig('LogisticRegression_BinCEAdam_lr={}_Epochs{}.png'.format(learning_rate, epochs), dpi = 300)
 
     #Printing the Training and Validation metrics - Loss & Accuracy
     print("Epochs = {}".format(epochs))
+    print("val_loss length:",len(lr_h.history['val_loss']))
+    print("val_acc length:",len(lr_h.history['val_acc']))
+    print("loss length:",len(lr_h.history['loss']))
+    print("acc length:",len(lr_h.history['acc']))
 
     print("Average Training loss =", sum(lr_h.history['loss'])/len(lr_h.history['loss']))
     print("Average Training accuracy=", sum(lr_h.history['acc'])/len(lr_h.history['acc'])*100)

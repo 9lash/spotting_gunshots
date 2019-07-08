@@ -1,6 +1,5 @@
 # Single layer NN classifier 
 
-%matplotlib inline
 import matplotlib.pyplot as plt
 plt.rcParams['figure.figsize'] = (12,8)
 import numpy as np
@@ -8,8 +7,11 @@ import tensorflow as tf
 import keras
 import pandas as pd
 from keras_tqdm import TQDMNotebookCallback
-
 from keras.preprocessing.sequence import pad_sequences
+from keras.models import Sequential
+from keras.layers import Dense, BatchNormalization, Flatten
+from keras.regularizers import l2
+from keras.utils import plot_model      
 
 # data generator function which creates a numpy array of audioframes (X) and corresponding labels (y)
 def data_generator(batch_size, tfrecord, start_frac=0, end_frac=1):
@@ -77,56 +79,47 @@ def data_generator(batch_size, tfrecord, start_frac=0, end_frac=1):
         yield X, np.array(y)
 
 
-# Building the Model
+def main():
+    adam = optimizers.Adam(lr=0.4)
 
-from keras.models import Sequential
-from keras.layers import Dense, BatchNormalization, Flatten
-# l2 on a dense layer
-from keras.regularizers import l2
-adam = optimizers.Adam(lr=0.4)
-
-nn_model = Sequential()
-nn_model.add(BatchNormalization(input_shape=(10, 128)))
-nn_model.add(Flatten())
-# nn_model.add(Dense(100, activation='relu',kernel_regularizer=l2(0.01), bias_regularizer=l2(0.01)))
-nn_model.add(Dense(100, activation='relu'))
-nn_model.add(Dense(1, activation='sigmoid'))                 
-nn_model.compile(loss='binary_crossentropy',
-              optimizer=adam,
-              metrics=['accuracy'])
+    nn_model = Sequential()
+    nn_model.add(BatchNormalization(input_shape=(10, 128)))
+    nn_model.add(Flatten())
+    # nn_model.add(Dense(100, activation='relu',kernel_regularizer=l2(0.01), bias_regularizer=l2(0.01)))
+    nn_model.add(Dense(100, activation='relu'))
+    nn_model.add(Dense(1, activation='sigmoid'))                 
+    nn_model.compile(loss='binary_crossentropy',
+                  optimizer=adam,
+                  metrics=['accuracy'])
 
 
-batch_size=  40 
-CV_frac = 0.1
-train_gen = data_generator(batch_size,'../data/preprocessed/bal_gunspotting_in_school_subset.tfrecord', 0, 1-CV_frac)
-val_gen = data_generator(20,'../data/preprocessed/bal_gunspotting_in_school_subset.tfrecord', 1-CV_frac, 1)
-rec_len = 17662 
-nn_h = nn_model.fit_generator(train_gen,steps_per_epoch=int(rec_len*(1-CV_frac))//batch_size, epochs=50,validation_data=val_gen, validation_steps=int(rec_len*CV_frac)//20,verbose=1, callbacks=[TQDMNotebookCallback()])
+    batch_size=  40 
+    CV_frac = 0.1
+    train_gen = data_generator(batch_size,'../data/preprocessed/bal_gunspotting_in_school_subset.tfrecord', 0, 1-CV_frac)
+    val_gen = data_generator(20,'../data/preprocessed/bal_gunspotting_in_school_subset.tfrecord', 1-CV_frac, 1)
+    rec_len = 17662 
+    nn_h = nn_model.fit_generator(train_gen,steps_per_epoch=int(rec_len*(1-CV_frac))//batch_size, epochs=20,validation_data=val_gen, validation_steps=int(rec_len*CV_frac)//20,verbose=1, callbacks=[TQDMNotebookCallback()])
+
+    #Plot the training performance graphs for the NN classifier
+    plt.plot(nn_h.history['acc'], 'o-', label='train_acc')
+    plt.plot(nn_h.history['val_acc'], 'x-', label='val_acc')
+    plt.xlabel('Epochs(50)', size=20)
+    plt.ylabel('Accuracy', size=20)
+    plt.legend()
+    plt.savefig('results/training_results/NeuralNet/SingleLayerNN__Loss=BinaryCE_50Epochs_lr0.4performance.png', dpi = 300)
+
+    print("Epochs = 50")
+    print("val_loss length:",len(nn_h.history['val_loss']))
+    print("val_acc length:",len(nn_h.history['val_acc']))
+    print("loss length:",len(nn_h.history['loss']))
+    print("acc length:",len(nn_h.history['acc']))
+
+    print("Average Training loss =", sum(nn_h.history['loss'])/len(nn_h.history['loss']))
+    print("Average Training accuracy=", sum(nn_h.history['acc'])/len(nn_h.history['acc'])*100)
+    print("Average validation loss =", sum(nn_h.history['val_loss'])/len(nn_h.history['val_loss']))
+    print("Average validation accuracy=", sum(nn_h.history['val_acc'])/len(nn_h.history['val_acc'])*100)
+    plot_model(nn_model, to_file='results/training_results/NeuralNet/SingleLayerNN__Loss=BinaryCE_50Epochs_lr0.4Model.png')
 
 
-#Plot the training performance graphs for the NN classifier
-plt.plot(nn_h.history['acc'], 'o-', label='train_acc')
-plt.plot(nn_h.history['val_acc'], 'x-', label='val_acc')
-plt.xlabel('Epochs(50)', size=20)
-plt.ylabel('Accuracy', size=20)
-plt.legend()
-plt.savefig('results/training_results/NeuralNet/SingleLayerNN__Loss=BinaryCE_50Epochs_lr0.4performance.png', dpi = 300)
-
-
-
-print("Epochs = 50")
-print("val_loss length:",len(nn_h.history['val_loss']))
-print("val_acc length:",len(nn_h.history['val_acc']))
-print("loss length:",len(nn_h.history['loss']))
-print("acc length:",len(nn_h.history['acc']))
-
-print("Average Training loss =", sum(nn_h.history['loss'])/len(nn_h.history['loss']))
-print("Average Training accuracy=", sum(nn_h.history['acc'])/len(nn_h.history['acc'])*100)
-print("Average validation loss =", sum(nn_h.history['val_loss'])/len(nn_h.history['val_loss']))
-print("Average validation accuracy=", sum(nn_h.history['val_acc'])/len(nn_h.history['val_acc'])*100)
-
-
-from keras.utils import plot_model
-plot_model(nn_model, to_file='results/training_results/NeuralNet/SingleLayerNN__Loss=BinaryCE_50Epochs_lr0.4Model.png')
-
-
+if __name__ == "__main__":
+    main()

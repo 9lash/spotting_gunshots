@@ -1,6 +1,5 @@
 # Data exploration: Plot the PCA and tSNE 
 
-%matplotlib inline
 import matplotlib.pyplot as plt
 plt.rcParams['figure.figsize'] = (12,8)
 import numpy as np
@@ -9,15 +8,15 @@ import keras
 import pandas as pd
 from keras_tqdm import TQDMNotebookCallback
 
-#Loading the training data subset
-
-records_subset = list(tf.python_io.tf_record_iterator('../data/preprocessed/bal_gunspotting_in_school_subset.tfrecord')) #records holds the array of the tfrecord file
-rec_len = len(records_subset)
-print(rec_len)
-
 
 from bitstring import BitArray  #To perform bit manipulation
 from keras.preprocessing.sequence import pad_sequences
+
+# PCA 
+# import mdtraj as md
+from sklearn.decomposition import PCA
+import seaborn as sns
+from sklearn.manifold import TSNE
 
 def datamatrix_multiclass(tfrecord, start_frac=0, end_frac=1):
     '''
@@ -98,7 +97,7 @@ def datamatrix_multiclass(tfrecord, start_frac=0, end_frac=1):
             if((sum(dict_classes.values())==2)):
                 if(dict_classes["gun"] == 1):
                     y.append(0)
-                    print("co-occurrence of gun class with someother class")
+                    # print("co-occurrence of gun class with someother class")
                 elif(dict_classes["hammer"]==1):
                     y.append(3)
                 elif(dict_classes["fireworks"]==1):
@@ -116,7 +115,7 @@ def datamatrix_multiclass(tfrecord, start_frac=0, end_frac=1):
             if((sum(dict_classes.values())>=3)):
                 if(dict_classes["gun"] == 1):
                     y.append(0)
-                    print("co-occurrence of gun class with >=3 class")
+                    # print("co-occurrence of gun class with >=3 class")
                 else:
                     y.append(7)
                
@@ -136,152 +135,100 @@ def datamatrix_multiclass(tfrecord, start_frac=0, end_frac=1):
         return X, np.array(y)
 
 
-audio_train,labels_train = datamatrix_multiclass('../data/preprocessed/bal_gunspotting_in_school_subset.tfrecord')
-print(labels_train[labels_train==0].shape) 
-print("Dimension of training matrix:",len(audio_train),"x",len(audio_train[0]))
 
+def traindata_pca(train_tfrecord_path):
 
-# PCA 
-# import mdtraj as md
-from sklearn.decomposition import PCA
-import seaborn as sns
+    audio_train,labels_train = datamatrix_multiclass(train_tfrecord_path)
+    print(labels_train[labels_train==0].shape) 
+    print("Dimension of training matrix:",len(audio_train),"x",len(audio_train[0]))
+    print("Performing PCA to reduce the dimensions to 3 and visualize the data")
 
-#PCA in 2 dimensions
-df_pca  = pd.DataFrame(audio_train)
-df_pca['y'] = labels_train
-pca = PCA(n_components=3)
-pca_result = pca.fit_transform(df_pca) #audio_train)
-df_pca['pca-one'] = pca_result[:,0]
-df_pca['pca-two'] = pca_result[:,1] 
-df_pca['pca-three'] = pca_result[:,2]
-# Now you have 3 more coloumns on your df_pca dataframe
-print('Explained variation per principal component: {}'.format(pca.explained_variance_ratio_))
+    #PCA in 2 dimensions
+    df_pca  = pd.DataFrame(audio_train)
+    df_pca['y'] = labels_train
+    pca = PCA(n_components=3)
+    pca_result = pca.fit_transform(df_pca) #audio_train)
+    df_pca['pca-one'] = pca_result[:,0]
+    df_pca['pca-two'] = pca_result[:,1] 
+    df_pca['pca-three'] = pca_result[:,2]
+    # Now you have 3 more coloumns on your df_pca dataframe
+    print('Explained variation per principal component: {}'.format(pca.explained_variance_ratio_))
 
-# For reproducability of the results
-np.random.seed(42)
-rndperm = np.random.permutation(df_pca.shape[0])
+    # For reproducability of the results
+    np.random.seed(42)
+    rndperm = np.random.permutation(df_pca.shape[0])
 
-colors = ["windows blue", "amber", "greyish", "faded green", "dusty purple","black", "red","tan"]
-sns.palplot(sns.xkcd_palette(colors))
-plt.figure(figsize=(16,10))
-sns.set_style("whitegrid")
-sns.scatterplot(
-    x="pca-one", y="pca-two",
-    hue= "y",
-    palette = sns.xkcd_palette(colors),
-    data=df_pca.loc[rndperm,:],
-    legend="full",
-)
+    colors = ["windows blue", "amber", "greyish", "faded green", "dusty purple","black", "red","tan"]
+    sns.palplot(sns.xkcd_palette(colors))
+    plt.figure(figsize=(16,10))
+    sns.set_style("whitegrid")
+    sns.scatterplot(
+        x="pca-one", y="pca-two",
+        hue= "y",
+        palette = sns.xkcd_palette(colors),
+        data=df_pca.loc[rndperm,:],
+        legend="full",
+    )
 
-plt.savefig("PCA_training_data.png", dpi=400)
-
+    plt.savefig("PCA_training_data.png", dpi=400)
 
 
 
-#tSNE analysis
+#tsne on training data
+def traindata_tsne(train_tfrecord_path, perplex, iter_count):
+    audio_train,labels_train = datamatrix_multiclass(train_tfrecord_path)
+    print(labels_train[labels_train==0].shape) 
+    print("Dimension of training matrix:",len(audio_train),"x",len(audio_train[0]))
 
-#tSNE analysis perplexity = 40, iteration 250
-from sklearn.manifold import TSNE
-tsne = TSNE(n_components=2, verbose=1, perplexity=40, n_iter=250)
-tsne_results = tsne.fit_transform(audio_train)
-df_tsne = pd.DataFrame()
-df_tsne['tsne-2d-one'] = tsne_results[:,0]
-df_tsne['tsne-2d-two'] = tsne_results[:,1]
-df_tsne['class'] = labels_train
-plt.figure(figsize=(16,10))
-sns.scatterplot(
-    x="tsne-2d-one", y="tsne-2d-two",
-    hue="class",
-    palette = sns.xkcd_palette(colors),
-    data=df_tsne,
-    legend="full",
-#     alpha=0.3
-)
-plt.savefig("tSNE_iter250_perplexity40.png")
-print('tsne plotting finished')
+    #tSNE analysis
+    print("Performing a tsne analysis with perplexity ={} and iterations={}".format(perplex,iter_count))
+    tsne = TSNE(n_components=2, verbose=1, perplexity=perplex, n_iter=iter_count)
+    tsne_results = tsne.fit_transform(audio_train)
+    df_tsne = pd.DataFrame()
+    df_tsne['tsne-2d-one'] = tsne_results[:,0]
+    df_tsne['tsne-2d-two'] = tsne_results[:,1]
+    df_tsne['class'] = labels_train
+    
+    colors = ["windows blue", "amber", "greyish", "faded green", "dusty purple","black", "red","tan"]
+    sns.palplot(sns.xkcd_palette(colors))
+    plt.figure(figsize=(16,10))
+    sns.scatterplot(
+        x="tsne-2d-one", y="tsne-2d-two",
+        hue="class",
+        palette = sns.xkcd_palette(colors),
+        data=df_tsne,
+        legend="full",
+    #     alpha=0.3
+    )
 
-
-#tSNE analysis perplexity = 50, iteration 250
-tsne = TSNE(n_components=2, verbose=1, perplexity=50, n_iter=250)
-tsne_results = tsne.fit_transform(audio_train)
-df_tsne = pd.DataFrame()
-df_tsne['tsne-2d-one'] = tsne_results[:,0]
-df_tsne['tsne-2d-two'] = tsne_results[:,1]
-df_tsne['class'] = labels_train
-plt.figure(figsize=(16,10))
-sns.scatterplot(
-    x="tsne-2d-one", y="tsne-2d-two",
-    hue="class",
-    palette=sns.color_palette("hls", 8),
-    data=df_tsne,
-    legend="full",
-#     alpha=0.3
-)
-plt.savefig("tSNE_iter250_perplexity50.png")
-print('tsne plotting finished')
-
-
-#tSNE analysis perplexity = 30, iteration 250
-tsne = TSNE(n_components=2, verbose=1, perplexity=30, n_iter=250)
-tsne_results = tsne.fit_transform(audio_train)
-df_tsne = pd.DataFrame()
-df_tsne['tsne-2d-one'] = tsne_results[:,0]
-df_tsne['tsne-2d-two'] = tsne_results[:,1]
-df_tsne['class'] = labels_train
-plt.figure(figsize=(16,10))
-sns.scatterplot(
-    x="tsne-2d-one", y="tsne-2d-two",
-    hue="class",
-    palette=sns.color_palette("hls", 8),
-    data=df_tsne,
-    legend="full",
-#     alpha=0.3
-)
-plt.savefig("tSNE_iter250_perplexity30.png")
-print('tsne plotting finished')
-
-
-#tSNE analysis perplexity = 2, iteration 250
-tsne = TSNE(n_components=2, verbose=1, perplexity=2, n_iter=250)
-tsne_results = tsne.fit_transform(audio_train)
-df_tsne = pd.DataFrame()
-df_tsne['tsne-2d-one'] = tsne_results[:,0]
-df_tsne['tsne-2d-two'] = tsne_results[:,1]
-df_tsne['class'] = labels_train
-plt.figure(figsize=(16,10))
-sns.scatterplot(
-    x="tsne-2d-one", y="tsne-2d-two",
-    hue="class",
-    palette=sns.color_palette("hls", 8),
-    data=df_tsne,
-    legend="full",
-#     alpha=0.3
-)
-plt.savefig("tSNE_iter250_perplexity2.png")
-print('tsne plotting finished')
-
-
-#tSNE analysis perplexity = 5, iteration 250
-tsne = TSNE(n_components=2, verbose=1, perplexity=5, n_iter=250)
-tsne_results = tsne.fit_transform(audio_train)
-df_tsne = pd.DataFrame()
-df_tsne['tsne-2d-one'] = tsne_results[:,0]
-df_tsne['tsne-2d-two'] = tsne_results[:,1]
-df_tsne['class'] = labels_train
-plt.figure(figsize=(16,10))
-sns.scatterplot(
-    x="tsne-2d-one", y="tsne-2d-two",
-    hue="class",
-    palette=sns.color_palette("hls", 8),
-    data=df_tsne,
-    legend="full",
-#     alpha=0.3
-)
-plt.savefig("tSNE_iter250_perplexity5.png")
-print('tsne plotting finished')
+    plt_name = "tSNE_perplexity{}_iter{}.png".format(perplex,iter_count) 
+    plt.savefig(plt_name)
+    print('tsne plotting finished')
 
 
 
+def main():
 
+    #path of the training subset tfrecord
+    train_tfrecord_path = '../data/preprocessed/bal_gunspotting_in_school_subset.tfrecord'
+
+    #Loading the training data subset
+    records_subset = list(tf.python_io.tf_record_iterator(train_tfrecord_path)) #records holds the array of the tfrecord file
+    rec_len = len(records_subset)
+    print("Total number of samples in training dataset = ", rec_len)
+
+    #performing pca & save the plot beside the current python file
+    traindata_pca(train_tfrecord_path)
+
+    #perform tsne and save the plot beside the current python file
+    # traindata_tsne(train_tfrecord_path,40,250)
+    # traindata_tsne(train_tfrecord_path,50,250)
+    traindata_tsne(train_tfrecord_path,2,250)
+    traindata_tsne(train_tfrecord_path,5,250)
+    traindata_tsne(train_tfrecord_path,30,250)
+
+
+if __name__ == "__main__":
+    main()
 
 

@@ -83,6 +83,7 @@ def main(_):
   # the model. If none is provided, we generate a synthetic input.
   if FLAGS.wav_file:
     wav_file = FLAGS.wav_file
+    print("**********wav_file passed***********")
   else:
     # Write a WAV of a sine wav into an in-memory file object.
     num_secs = 5
@@ -97,13 +98,11 @@ def main(_):
     wav_file.seek(0)
   examples_batch = vggish_input.wavfile_to_examples(wav_file)
   print(examples_batch)
-
   # Prepare a postprocessor to munge the model embeddings.
   pproc = vggish_postprocess.Postprocessor(FLAGS.pca_params)
 
   # If needed, prepare a record writer to store the postprocessed embeddings.
-  writer = tf.python_io.TFRecordWriter(
-      FLAGS.tfrecord_file) if FLAGS.tfrecord_file else None
+  writer = tf.python_io.TFRecordWriter(FLAGS.tfrecord_file) if FLAGS.tfrecord_file else None
 
   with tf.Graph().as_default(), tf.Session() as sess:
     # Define the model in inference mode, load the checkpoint, and
@@ -121,6 +120,7 @@ def main(_):
     print(embedding_batch)
     postprocessed_batch = pproc.postprocess(embedding_batch)
     print(postprocessed_batch)
+    print("Dimension of postprocessed_batch: ",postprocessed_batch.shape)
 
     # Write the postprocessed embeddings as a SequenceExample, in a similar
     # format as the features released in AudioSet. Each row of the batch of
@@ -149,5 +149,6 @@ def main(_):
   if writer:
     writer.close()
 
+  
 if __name__ == '__main__':
   tf.app.run()
