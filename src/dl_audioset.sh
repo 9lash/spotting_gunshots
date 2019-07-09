@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # clear
 
 #Check if feature_tar.gz exists, if not download
@@ -22,7 +21,6 @@ if test -f "$feature_tar"; then
 	feature=1
     echo "$feature_tar Downloaded successfully"
 fi
-
 
 
 #Check if unbalanced_train_segments.csv exists, if not download

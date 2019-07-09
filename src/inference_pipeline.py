@@ -183,7 +183,7 @@ def main(_):
   # print("Dimension after adding newaxis", X.shape)
 
   #Loading LSTM model
-  m4 = load_model('models/1LayerLSTM__Loss=BinCE_20Epochs_july02.h5')
+  m4 = load_model('../models/1LayerLSTM__Loss=BinCE_20Epochs_july02.h5')
   p4 = m4.predict(X)
 
   print("Gunshot score for inference_sample: ====> ", float(p4*100),"percent confidence")

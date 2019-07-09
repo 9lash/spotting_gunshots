@@ -106,9 +106,9 @@ def main():
     plt.xlabel('Epochs(50)', size=20)
     plt.ylabel('Accuracy', size=20)
     plt.legend()
-    plt.savefig('results/training_results/NeuralNet/SingleLayerNN__Loss=BinaryCE_50Epochs_lr0.4performance.png', dpi = 300)
+    plt.savefig('../results/training_results/NeuralNet/SingleLayerNN__Loss=BinaryCE_50Epochs_lr0.4performance.png', dpi = 300)
 
-    print("Epochs = 50")
+    print("Epochs = 20")
     print("val_loss length:",len(nn_h.history['val_loss']))
     print("val_acc length:",len(nn_h.history['val_acc']))
     print("loss length:",len(nn_h.history['loss']))
@@ -118,7 +118,7 @@ def main():
     print("Average Training accuracy=", sum(nn_h.history['acc'])/len(nn_h.history['acc'])*100)
     print("Average validation loss =", sum(nn_h.history['val_loss'])/len(nn_h.history['val_loss']))
     print("Average validation accuracy=", sum(nn_h.history['val_acc'])/len(nn_h.history['val_acc'])*100)
-    plot_model(nn_model, to_file='results/training_results/NeuralNet/SingleLayerNN__Loss=BinaryCE_50Epochs_lr0.4Model.png')
+    plot_model(nn_model, to_file='../results/training_results/NeuralNet/SingleLayerNN__Loss=BinaryCE_50Epochs_lr0.4Model.png')
 
 
 if __name__ == "__main__":

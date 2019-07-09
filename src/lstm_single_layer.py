@@ -106,10 +106,10 @@ def lstm_trainer(train_tfrecord, train_lr, train_epochs):
                            verbose=1, callbacks=[TQDMNotebookCallback()])
     
     # Plot the model architecture
-    plot_model(lstm_model, to_file='results/LSTM/LSTM_Loss=BinCE_Epochs{}_lt={}.png'.format(train_epochs,train_lr))
+    plot_model(lstm_model, to_file='../results/LSTM/LSTM_Loss=BinCE_Epochs{}_lt={}.png'.format(train_epochs,train_lr))
 
     # Save the lstm model
-    lstm_model.save('models/1LayerLSTM__Loss=BinCE_lr={}_Epochs={}.h5'.format(train_lr, train_epochs))
+    lstm_model.save('../models/1LayerLSTM__Loss=BinCE_lr={}_Epochs={}.h5'.format(train_lr, train_epochs))
     return lstm_h
 
 
@@ -131,7 +131,7 @@ if __name__ == "__main__":
     plt.xlabel('Epochs({})'.format(epochs), size=20)
     plt.ylabel('Accuracy', size=20)
     plt.legend()
-    plt.savefig('results/LSTM/LSTM__Loss=BinCE_{}Epochs_lr={}_performance.png'.format(epochs,learning_rate), dpi = 300)
+    plt.savefig('../results/LSTM/LSTM__Loss=BinCE_{}Epochs_lr={}_performance.png'.format(epochs,learning_rate), dpi = 300)
 
 
     # Metrics for the LSTM

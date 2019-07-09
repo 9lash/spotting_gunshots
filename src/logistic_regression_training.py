@@ -106,10 +106,10 @@ def trainer(train_tfrecord, train_lr, train_epochs):
     lr_h = lr_model.fit_generator(train_gen, steps_per_epoch=int(rec_len*(1-CV_frac))//batch_size, epochs=train_epochs,validation_data=val_gen, validation_steps=int(rec_len*CV_frac)//20,verbose=1, callbacks=[TQDMNotebookCallback()])
     
     #Save the model architecture image always at same path
-    plot_model(lr_model, to_file='results/LogisticReg/model_LogisticRegression_BinaryCE_Adam_lr={}_Epochs{}.png'.format(train_lr, train_epochs))
+    plot_model(lr_model, to_file='../results/LogisticReg/model_LogisticRegression_BinaryCE_Adam_lr={}_Epochs{}.png'.format(train_lr, train_epochs))
 
     #Save the model at the same path
-    lr_model.save('models/LogisticRegression_BinCE_Adam_lr={}_Epochs={}.h5'.format(train_lr,train_epochs))
+    lr_model.save('../models/LogisticRegression_BinCE_Adam_lr={}_Epochs={}.h5'.format(train_lr,train_epochs))
     return lr_h
 
 
@@ -132,7 +132,7 @@ if __name__ == "__main__":
     plt.xlabel('Epochs({})'.format(epochs), size=20)
     plt.ylabel('Accuracy', size=20)
     plt.legend()
-    plt.savefig('results/LogisticReg/LogisticRegression_BinCEAdam_lr={}_Epochs{}.png'.format(learning_rate, epochs), dpi = 300)
+    plt.savefig('../results/LogisticReg/LogisticRegression_BinCEAdam_lr={}_Epochs{}.png'.format(learning_rate, epochs), dpi = 300)
 
     #Printing the Training and Validation metrics - Loss & Accuracy
     print("Epochs = {}".format(epochs))

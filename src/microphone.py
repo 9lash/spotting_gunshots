@@ -1,7 +1,7 @@
 from __future__ import print_function
 
 import sys
-sys.path.insert(0, 'src/VGGish/')
+sys.path.insert(0, 'VGGish/')
 
 
 import time
@@ -50,11 +50,11 @@ flags.DEFINE_string(
     'If none is provided, a synthetic sound is used.')
 
 flags.DEFINE_string(
-    'checkpoint', 'src/VGGish/vggish_model.ckpt',
+    'checkpoint', 'VGGish/vggish_model.ckpt',
     'Path to the VGGish checkpoint file.')
 
 flags.DEFINE_string(
-    'pca_params', 'src/VGGish/vggish_pca_params.npz',
+    'pca_params', 'VGGish/vggish_pca_params.npz',
     'Path to the VGGish PCA parameters file.')
 
 flags.DEFINE_string(
