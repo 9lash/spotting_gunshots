@@ -12,20 +12,19 @@ On submitting a 10 second audio clip to this python package, you can expect a gu
 ## Setting up the environment
 
 1. Clone the spotting_gunshots repository
-2. Setup a new conda environment by installing the python requirements: pip install -r requirements.txt
-3. Goto /src and run ./dl_vggish_components.sh
-   This will download vggish_model.ckpt & VGG_PCA_Parameters from AudioSet and place it to the src/VGGish directory. This is essential for inference. 
-
-  
+2. Goto /src and run ./dl_vggish_components.sh
+      This will download vggish_model.ckpt & VGG_PCA_Parameters from AudioSet and place it to the src/VGGish directory. This is essential for inference.
+3. Setup a new conda environment by installing the python requirements: pip install -r requirements.txt 
 
 
 # Run inference on an existing sound clip
 
 To run the algorithm on a demo wav file, 
 
-1. In your terminal goto src/,
- run python inference_pipeline.py --wav_file ../inference_samples/gunshot_samples/pistol_shot.wav 
-2. To try some other sounds, run python inference_pipeline.py --wav_file ../inference_samples/other_samples/footseps_shuffle.wav
+	1. In your terminal goto src/,
+		run python inference_pipeline.py --wav_file ../inference_samples/gunshot_samples/pistol_shot.wav 
+	2. To try some other sounds, 
+		run python inference_pipeline.py --wav_file ../inference_samples/other_samples/footseps_shuffle.wav
 
 This should print out an output about gunshot probability score on your terminal. Multiple demo wav files are present in the inference_samples folder. 
 
