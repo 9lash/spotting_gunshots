@@ -80,7 +80,9 @@ This can be done either locally or on the cloud
 
 
 	To train a 1 layer Long short Term Memory (LSTM) model 
-	Step 1: Then run python lstm_single_layer.py to train the LSTM using the bal_training subset tfrecord. This training script will store the 1layer LSTM model (h5 file) under models/ folder. The results of the training score, validation score and the graphs will be stored in the results folder.
+	run python lstm_single_layer.py 
+	This training script will store the 1layer LSTM model (h5 file) under models/ folder. 
+	The results of the training score, validation score and the graphs will be stored in the results folder.
 
 
 	To train the logisitic regression model
