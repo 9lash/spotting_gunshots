@@ -1,1 +1,3 @@
-All of your project code will go here
+All python scripts present here. 
+
+VGGish folder contains the VGGish model used as a feature extractor. 
