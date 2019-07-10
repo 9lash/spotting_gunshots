@@ -65,8 +65,8 @@ To create a binary (or multi) classifer, we will first create a balanced subset 
 	To create a subset goto src/, run python audioset_feature_subset.py
 
 This will create two files: 
-1. bal_spotting_gunshots_subset.tfrecord [containing audio embeddings of 8831 gunshot clips & 8831 other class samples]
-2. eval_spotting_gunshots_subset.tfrecord [containing audio embeddings of 292 gunshot and 292 other class samples]
+1. bal_spotting_gunshots_subset.tfrecord contains audio embeddings of 8831 gunshot clips & 8831 other class samples
+2. eval_spotting_gunshots_subset.tfrecord contains audio embeddings of 292 gunshot and 292 other class samples
 3. Additionally it also creates a unbal_train_tagged.csv file which labels those clips which exclusively has gunshots as gunshot class and the samples which exclusively belong to other class [fireworks, glass break, hammer, tools, background noises, usual sounds in school environment like kids chatting, teaching and other outdoor public spaces sounds] as no_gunshot. This exclusiveness helps model the two class and avoids co-occurences of both class. 
 
 All the above dataset and csv files will be placed in data/preprocessed. 
@@ -78,18 +78,15 @@ The selection of the other class is crucial to make the classifier robust and wa
 ## Lets Build Model
 This can be done either locally or on the cloud
 
-### To train a 1 layer Long short Term Memory (LSTM) model 
 
-### Step 1: To train the model in your own subset, we will then need to run the audioset_feature_subset.py. This will create a subset dataset containing only the classes that are relevant for our training. As a result of this python file, there will be two new tfrecord files formed which contain the data subset. One is bal_gunspotting_in_school_subset.tfrecord file and the other is eval_gunspotting_in_school_subset.tfrecord.  
+	To train a 1 layer Long short Term Memory (LSTM) model 
+	Step 1: Then run python lstm_single_layer.py to train the LSTM using the bal_training subset tfrecord. This training script will store the 1layer LSTM model (h5 file) under models/ folder. The results of the training score, validation score and the graphs will be stored in the results folder.
 
-### Step 2: Then run python lstm_single_layer.py to train the LSTM using the bal_training subset tfrecord. This training script will store the 1layer LSTM model (h5 file) under src/models/ folder. The results of the training score, validation score and the graphs will be stored in the src/results folder.
 
-```
-# To train the logisitic regression model
-	goto src and run python logistic_regression_training.py
-You can then use the logisitic regression model present in the models/ directory to infer by replacing the lstm model with logistic regression model in the inference_pipeline.py.
-# The results of the logisitic regression model training and validation performance will be saved in the results folder.
-```
+	To train the logisitic regression model
+		goto src and run python logistic_regression_training.py
+
+You can then use the logisitic regression model present in the models/ directory to infer by replacing the lstm model with logistic regression model in the inference_pipeline.py. The results of the logisitic regression model training and validation performance will be saved in the results folder.
 
 
 ## Data Exploration: 
