@@ -93,8 +93,8 @@ You can then use the logisitic regression model present in the models/ directory
 
 ## Data Exploration: 
 
-To run PCA analysis, t-SNE analysis and plotting goto /src,
-	run python data_analysis.py
+	To run PCA analysis, t-SNE analysis and plotting goto /src,
+		run python data_analysis.py
 
  This helps you to visualize the training dataset after applying dimensionality reduction techniques like PCA and tSNE. PCA here captures the average value of embeddings of different sound clips and plots in 2 dimensional space. Whereas the t-SNE captures the non linear behviours and preserves neighborhood relationships of sounds.tSNE groups the glass break, gunshots and fireworks are very close to each other. That shows that these classes are hard to distinguish. 
 
