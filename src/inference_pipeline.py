@@ -59,6 +59,9 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # {'0', '1', '2', '3'}
                                           # 2 = INFO and WARNING messages are not printed
                                           # 3 = INFO, WARNING, and ERROR messages are not printed
 
+import time
+start_time = time.time()
+
 import tensorflow as tf
 #to remove contrib WARNING
 if type(tf.contrib) != type(tf): tf.contrib._warning = None 
@@ -103,6 +106,7 @@ def main(_):
   if FLAGS.wav_file:
     wav_file = FLAGS.wav_file
     print("wav_file Found")
+    print()
   else:
     print("======== wav_file not passed or not found ========")
     print("To pass a wav_file run:")
@@ -186,11 +190,14 @@ def main(_):
   m4 = load_model('../models/1LayerLSTM__Loss=BinCE_20Epochs_july02.h5')
   p4 = m4.predict(X)
 
-  print("Gunshot score for inference_sample: ====> ", float(p4*100),"percent confidence")
+  print()
+  print("Gunshot score for inference_sample: ====> ", round(float(p4*100),2),"percent confidence")
   if(p4>= 0.51):
-    print("Gunshot present in the clip")
+    print("PREDICTION: Gunshot present in the clip")
   else:
-    print("Gunshot is not present in the clip")
+    print("PREDICTION: Gunshot is not present in the clip")
+
+  print("--Inference time = %s seconds --" %(time.time()-start_time))
 
 if __name__ == '__main__':
   tf.app.run()
