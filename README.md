@@ -1,5 +1,5 @@
 
-# spotting_gunshots_Framework
+# Spotting Gunshots in Noisy Audio
 
 AudioSet consists of an expanding ontology of 632 audio event classes and a collection of 2,084,320 human-labeled 10-second sound clips drawn from YouTube videos. This project focuses on using this dataset to train a simplistic classifer and a deep learning model with this dataset to detect gunshots against other sounds like fireworks, background and other extraneous noises.
 
