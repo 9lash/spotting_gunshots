@@ -1,33 +1,43 @@
 
 # Spotting Gunshots in Noisy Audio
 
-AudioSet consists of an expanding ontology of 632 audio event classes and a collection of 2,084,320 human-labeled 10-second sound clips drawn from YouTube videos. This project focuses on using this dataset to train a simplistic classifer and a deep learning model with this dataset to detect gunshots against other sounds like fireworks, background and other extraneous noises.
+AudioSet consists of an expanding ontology of 632 audio event classes and a collection of 2,084,320 human-labeled 10-second audio clips drawn from YouTube videos. This project focuses on using this dataset to train a classification model on audio embeddings to detect gunshots against other sounds like fireworks, background noise, speech, glass break, tools, hammer and other extraneous noises. This is achieved by using a pretrained CNN architecture, which we call VGGish to extract the distinct features from the audio clip and then passing this features to a LSTM model to predict the gunshot score. 
 
-Google AI has created a large scale compilation of audio dataset which are annotated with labels of the events that occur in the audio dataset. This dataset can be downloaded into two forms: 
 
-	1. CSV containing the Youtube ID of the audio clip and the labels annotated in the clip.
-	2. Audio Embeddings of each clip annotated with the event labels present in the clip.
+On submitting a 10 second audio clip to this python package, you can expect a gunshot prediction score on your terminal stating whether there is a gunshot present in the audio clip. 
 
-## Audio Embeddings: 
-The audio embedding that are provided in the dataset are basically the representation of a audio clip in a reduced dimension. For instance, if an audio file of 10 seconds long is recorded at 1000 bits/sec resolution, the audio embedding representation would be a 10 feature vectors for every second in the clip. Each feature vector contains 128 8bit numbers. This audio embedding featurization was produced by a VGG like model, where the model accepts a audio .wav file, performs mel-spectrum featurization and runs a sequence of convolutional layers to produce the above audio embeddings. 
 
-# Setting up the environment
+# Getting started:
+
+## Setting up the environment
 
 1. Clone the spotting_gunshots repository
-2. Setup the conda environment by installing the python requirements: pip install -r requirements.txt
-   Once the environment is setup, you will then need to download vggish_model.ckpt & VGG_PCA_Parameters from AudioSet and move it to the VGGish/  directory present inside the src directory to run the vggish model. These ckpt and PCA parameters could be found in VGGish project by tensorflow/models. 
+2. Setup a new conda environment by installing the python requirements: pip install -r requirements.txt
+3. Goto /src and run ./dl_vggish_components.sh
+   This will download vggish_model.ckpt & VGG_PCA_Parameters from AudioSet and place it to the src/VGGish directory. This is essential for inference. 
+
+  
 
 
-# To run the inference on a wav_file
+# Run inference on an existing sound clip
 
 To run the algorithm on a demo wav file, 
 
-1. In your terminal goto src/, run python inference_pipeline.py --wav_file ../inference_samples/gunshot_samples/pistol_shot.wav 
+1. In your terminal goto src/,
+ run python inference_pipeline.py --wav_file ../inference_samples/gunshot_samples/pistol_shot.wav 
 2. To try some other sounds, run python inference_pipeline.py --wav_file ../inference_samples/other_samples/footseps_shuffle.wav
 
 This should print out an output about gunshot probability score on your terminal. Multiple demo wav files are present in the inference_samples folder. 
 
 # Spotting Gunshots Framework: 
+
+Audioset dataset can be downloaded into two forms: 
+
+	1. CSV containing the Youtube ID of the audio clip and the labels annotated in the clip.
+	2. Audio Embeddings of each clip annotated with the event labels present in the clip.
+
+## Audio Embeddings: 
+The audio embedding that are provided in the dataset are basically the representation of a audio clip in a reduced dimension. For instance, if an audio file of 10 seconds long is recorded at 1000 bits/sec resolution, the audio embedding representation would be a 10 feature vectors for every second in the clip. Each feature vector contains 128 8bit numbers. This audio embedding featurization was produced by a VGG like model, where the model accepts a audio .wav file, performs mel-spectrum featurization and runs a sequence of convolutional layers to produce the above audio embeddings.
 
 ## Creating a subset dataset
 
