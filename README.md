@@ -12,15 +12,15 @@ On submitting a 10 second audio clip to this python package, you can expect a gu
 ## Setting up the environment
 
 1. Clone the spotting_gunshots repository
-2. Goto /src and run ./dl_vggish_components.sh <br/>
+2. Goto /src and run ```./dl_vggish_components.sh ```<br/>
       This will download vggish_model.ckpt & VGG_PCA_Parameters from AudioSet and place it to the src/VGGish directory. This cehckpoint file is essential for inference.
 
-3. Setup a new conda environment by installing the python requirements: pip install -r requirements.txt 
+3. Setup a new conda environment by installing the python requirements: ```pip install -r requirements.txt``` 
    
    If the installing all requirements was not successful, then these are the general commands which fix issues. 
-   conda install -c anaconda pygpu <br/>
+   ```conda install -c anaconda pygpu ```<br/>
    Ignore issues with incompatible homeassistant package.<br/> 
-   And then retry pip install -r requirements.txt  <br/>
+   And then retry ```pip install -r requirements.txt ``` <br/>
 
 ## Run inference on an existing sound clip
 
@@ -49,7 +49,7 @@ For training purposes, Audioset can be downloaded into two forms:
 	2. Audio Embeddings of each clip annotated with the event labels present in the clip.
 
 	To download the entire dataset, goto src/,
-	run ./dl_audioset.sh
+	run ```./dl_audioset.sh```
 This will download all the necessary csv files and the features.tar file containing the audio embeddings of all the sound clips in the form of tfrecord format in data/raw. 
 
 
