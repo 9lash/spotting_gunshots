@@ -104,7 +104,7 @@ You can then use the logisitic regression model present in the models/ directory
 ## Requisites
 
 - package managers - 
-conda version : 4.6.14
+conda version : 4.6.14 or higher
 pip 19.1.1
 
 #### Dependencies
