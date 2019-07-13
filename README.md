@@ -103,8 +103,9 @@ You can then use the logisitic regression model present in the models/ directory
 
 ## Requisites
 
-- List of all packages and software needed to build the environment
-- package managers - conda, pip.
+- package managers - 
+conda version : 4.6.14
+pip 19.1.1
 
 #### Dependencies
 - VGGish 
@@ -112,7 +113,7 @@ You can then use the logisitic regression model present in the models/ directory
 #### Installation
 To install the package above, please run:
 ```shell
-pip install -r requirements
+pip install -r requirements.txt
 ```
 
 
@@ -122,8 +123,7 @@ pip install -r requirements
 - As a base line, the logistic regression and a single hidden layer neural network was trained on audio embeddings to detect gunshots or no-gunshots. Logistic regression gave a avergage performance of about 84% accuracy. But the training accuracy and validation accuracy of logisitic classifier doesnt flatten out. Graphs show an unstable performance. The single layer neural net also gives a similar reponse. 
 - As opposed to Logistic regression and single layer neural net, a single layer LSTM performs much better. The overall accuracy goes upto 92% (highest) when the learning rate is set to 0.001. LSTM takes advantage of its nature to identify a sequence of patterns as opposed to neural nets or logistic regression.
 - On trying multiple layers of LSTM (3 layers), the accuracy remained the same. It did not add value to the performance of the classifer but the size of the model increased. 
-- Overall, it makes sense to select recall as a metric to decide between the models because it is more expensive to miss a gunshot than to minimize false positives. I see that a 1 layer LSTM works pretty well along with the VGGish feature extractor giving an inference time of about ~7secs on a CPU. 
-
+- Overall, it makes sense to select recall as a metric to decide between the models because it is more expensive to miss a gunshot than to minimize false positives. I see that a 1 layer LSTM works pretty well along with the VGGish feature extractor giving an inference time of about ~7secs on a CPU.
 
 
 ## Current Limitations of Dataset:
