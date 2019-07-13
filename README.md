@@ -127,7 +127,7 @@ pip install -r requirements.txt
 ```
 
 ![](extras/tsne.png)
-**Figure 3: tSNE shows how distribution of hard negatives classes (fireworks and glass breaks) are with gunshot classes. Each dot is an audio clip **
+**Figure 3: tSNE shows how distribution of hard negatives classes (fireworks and glass breaks) are with gunshot classes. Each dot is an audio clip ** 
 
 
 ## Analysis
@@ -136,12 +136,12 @@ pip install -r requirements.txt
 - As a base line, the logistic regression and a single hidden layer neural network was trained on audio embeddings to detect gunshots or no-gunshots. Logistic regression gave a avergage performance of about 84% accuracy. But the training accuracy and validation accuracy of logisitic classifier doesnt flatten out. Graphs show an unstable performance. The single layer neural net also gives a similar reponse. 
 - As opposed to Logistic regression and single layer neural net, a single layer LSTM performs much better. The overall accuracy goes upto 92% (highest) when the learning rate is set to 0.001. LSTM takes advantage of its nature to identify a sequence of patterns as opposed to neural nets or logistic regression.
 - On trying multiple layers of LSTM (3 layers), the accuracy remained the same. It did not add value to the performance of the classifer but the size of the model increased. 
-- Overall, it makes sense to select recall as a metric to decide between the models because it is more expensive to miss a gunshot than to minimize false positives. I see that a 1 layer LSTM works pretty well along with the VGGish feature extractor giving an inference time of about ~7secs on a CPU.
+- Overall, it makes sense to select recall as a metric to decide between the models because it is more expensive to miss a gunshot than to minimize false positives. I see that a 1 layer LSTM works pretty well along with the VGGish feature extractor giving an inference time of about ~7secs on a CPU. <br/>
 
 
 ## Current Limitations of Dataset:
 Note that the dataset available has been tagged as gunshot or any other label like tool/ public speaking over the complete 10 secs of time. For the time being there is no frame level labeling. There is only a sample level labelling available for this dataset. This limits the capabilites of the model to perform real time solutions. Currently model has to wait for 10 secs and then process over those set of frames to infer whether there is gunshot or not. 
 
 ## References:
-Figure 1 - Listening for gunshots, California Sunday Magazine
-Thanks for audioset team in Google for releasing the curated youtube audio dataset, the VGGish model and the supporting scripts to run it. 
+Figure 1 - Listening for gunshots, California Sunday Magazine <br/>
+Thanks for audioset team in Google for releasing the curated youtube audio dataset, the VGGish model and the supporting scripts to run it.<br/> 
