@@ -12,15 +12,15 @@ On submitting a 10 second audio clip to this python package, you can expect a gu
 ## Setting up the environment
 
 1. Clone the spotting_gunshots repository
-2. Goto /src and run ./dl_vggish_components.sh
-      This will download vggish_model.ckpt & VGG_PCA_Parameters from AudioSet and place it to the src/VGGish directory. This is essential for inference.
+2. Goto /src and run ./dl_vggish_components.sh <br/>
+      This will download vggish_model.ckpt & VGG_PCA_Parameters from AudioSet and place it to the src/VGGish directory. This cehckpoint file is essential for inference.
 
 3. Setup a new conda environment by installing the python requirements: pip install -r requirements.txt 
    
    If the installing all requirements was not successful, then these are the general commands which fix issues. 
-   conda install -c anaconda pygpu
-   Ignore issues with incompatible homeassistant package. 
-   And then retry pip install -r requirements.txt  
+   conda install -c anaconda pygpu <br/>
+   Ignore issues with incompatible homeassistant package.<br/> 
+   And then retry pip install -r requirements.txt  <br/>
 
 ## Run inference on an existing sound clip
 
@@ -107,17 +107,17 @@ You can then use the logisitic regression model present in the models/ directory
 ```
 
 ## Requisites
-
 - package managers - 
 conda version : 4.6.14 or higher
 pip 19.1.1
 
 #### Dependencies
-- VGGish 
+- VGGish from 
 
 #### Installation
 To install the package above, please run:
 ```shell
+./dl_vggish_components.sh
 pip install -r requirements.txt
 ```
 
