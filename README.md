@@ -127,7 +127,7 @@ pip install -r requirements.txt
 ```
 
 ![](extras/tsne.png)
-**Figure 3: tSNE shows how distribution of hard negatives classes (fireworks and glass breaks) are with gunshot classes. Each dot is an audio clip ** 
+** Figure 3: tSNE shows how distribution of hard negatives classes (fireworks and glass breaks) are with gunshot classes. Each dot is an audio clip ** 
 
 
 ## Analysis
