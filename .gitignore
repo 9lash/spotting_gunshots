@@ -20,9 +20,11 @@ results/tSNE_perplexity30_iter250.png
 #exclude
 !results/LSTM/LSTM__Loss=BinCE_lr0.001_20Epochs_performance.png
 !results/LSTM/ConfusionMat_LSTM1_BinCE_Adam_lr0.001_20EP.png
+!results/LogisticReg/CM_LR_BinCE_Adam_lr0.1_pochs70.png
+!results/LogisticReg/LogisticRegression_BinCE_Adam_lr0.1_pochs50.png
 
 !models/1LayerLSTM__Loss=BinCE_40Epochs_highestacc.h5
 !models/1LayerLSTM__Loss=BinCE_20Epochs_july02.h5
 !models/LSTM_TwoLayer_25Epochs_Valid81.h5
 !models/SingleLayerNN__Loss=BinaryCE_50Epochs_lr0.4.h5
-
+!models/LogisticRegression_BinaryCE_Adam_50-Epochs.h5
