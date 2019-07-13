@@ -127,6 +127,8 @@ pip install -r requirements.txt
 ```
 
 ![](extras/tsne.png)
+**Figure 3: tSNE shows how distribution of hard negatives classes (fireworks and glass breaks) are with gunshot classes. Each dot is an audio clip **
+
 
 ## Analysis
 - The sound clips in our dataset are described by a 128 dimensional vector at each second for a duration of 10 sec. Thus forming a 128 x 10 dimensional vector. Principal component Analysis (PCA) was performed on the average of the audio embeddings over the 10 sec duration to form a 3 dimensional representation of sound clips. This was then visualized in a 2D chart. 
