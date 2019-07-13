@@ -49,7 +49,7 @@ For training purposes, Audioset can be downloaded into two forms:
 	2. Audio Embeddings of each clip annotated with the event labels present in the clip.
 
 	To download the entire dataset, goto src/,
-	run ```./dl_audioset.sh```
+	run ./dl_audioset.sh
 This will download all the necessary csv files and the features.tar file containing the audio embeddings of all the sound clips in the form of tfrecord format in data/raw. 
 
 
