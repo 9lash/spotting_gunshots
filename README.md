@@ -39,6 +39,8 @@ This should print out an output about gunshot probability score on your terminal
 
 ## Pipeline: 
 
+![](extras/pipeline.png)
+
 The audio files (.wav) are first preprocessed and converted to the mel-spectrogram representation in the initial preprocessing stage. Then these preprocessed mel-spectrograms are passed  as images to a VGGish model to form  high level audio embedding representation of each sec over a period of 10 seconds. These audio embeddings are post processed and quantized to form 128 8bit numbers which describe each second. 10 such embedding vectors describe a 10 sec audio clip. Then these embeddings are post processed by applying a PCA followed by whitening and as well as quantization to 8 bits per embedding element. 
 
 Now these post processed audio embeddings are passed through a trained 1 layer Long short term Memory (LSTM) model to predict whether a clip has gunshot or no gunshot. 
@@ -124,6 +126,7 @@ pip install -r requirements.txt
 
 ```
 
+![](extras/tsne.png)
 
 ## Analysis
 - The sound clips in our dataset are described by a 128 dimensional vector at each second for a duration of 10 sec. Thus forming a 128 x 10 dimensional vector. Principal component Analysis (PCA) was performed on the average of the audio embeddings over the 10 sec duration to form a 3 dimensional representation of sound clips. This was then visualized in a 2D chart. 
