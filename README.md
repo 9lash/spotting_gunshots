@@ -121,6 +121,7 @@ To install the package above, please run:
 ```shell
 ./dl_vggish_components.sh
 pip install -r requirements.txt
+
 ```
 
 
@@ -135,3 +136,7 @@ pip install -r requirements.txt
 
 ## Current Limitations of Dataset:
 Note that the dataset available has been tagged as gunshot or any other label like tool/ public speaking over the complete 10 secs of time. For the time being there is no frame level labeling. There is only a sample level labelling available for this dataset. This limits the capabilites of the model to perform real time solutions. Currently model has to wait for 10 secs and then process over those set of frames to infer whether there is gunshot or not. 
+
+## References:
+Figure 1 - Listening for gunshots, California Sunday Magazine
+Thanks for audioset team in Google for releasing the curated youtube audio dataset, the VGGish model and the supporting scripts to run it. 
