@@ -19,6 +19,7 @@ On submitting a 10 second audio clip to this python package, you can expect a gu
    
    If the installing all requirements was not successful, then these are the general commands which fix issues. 
    conda install -c anaconda pygpu
+   Ignore issues with incompatible homeassistant package. 
    And then retry pip install -r requirements.txt  
 
 ## Run inference on an existing sound clip
