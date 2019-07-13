@@ -1,6 +1,8 @@
 
 # Spotting Gunshots in Noisy Audio
 
+![](extras/california_sunday_magazine.png)
+
 AudioSet consists of an expanding ontology of 632 audio event classes and a collection of 2,084,320 human-labeled 10-second audio clips drawn from YouTube videos. This project focuses on using this dataset to train a classification model on audio embeddings to detect gunshots against other sounds like fireworks, background noise, speech, glass break, tools, hammer and other extraneous noises. This is achieved by using a pretrained CNN architecture, which we call VGGish to extract the distinct features from the audio clip and then passing this features to a LSTM model to predict the gunshot score. 
 
 
