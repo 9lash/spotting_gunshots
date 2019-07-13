@@ -10,7 +10,7 @@ results/LSTM/*
 results/NeuralNet/*
 results/LogisticReg/*
 
-models/
+
 results/tSNE_perplexity50_iter250.png
 results/tSNE_iter250_perp5.png
 results/tSNE_iter250_perp40.png
@@ -21,7 +21,8 @@ results/tSNE_perplexity30_iter250.png
 !results/LSTM/LSTM__Loss=BinCE_lr0.001_20Epochs_performance.png
 !results/LSTM/ConfusionMat_LSTM1_BinCE_Adam_lr0.001_20EP.png
 
-!models/LSTM/1LayerLSTM__Loss=BinCE_40Epochs_highestacc.h5
+!models/1LayerLSTM__Loss=BinCE_40Epochs_highestacc.h5
+!models/1LayerLSTM__Loss=BinCE_20Epochs_july02.h5
 !models/LSTM_TwoLayer_25Epochs_Valid81.h5
 !models/SingleLayerNN__Loss=BinaryCE_50Epochs_lr0.4.h5
 
