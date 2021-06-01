@@ -100,7 +100,7 @@ Theano==1.0.4
 tornado==6.0.2
 tqdm==4.32.1
 traitlets==4.3.2
-urllib3==1.23
+urllib3==1.26.5
 voluptuous==0.11.5
 voluptuous-serialize==2.0.0
 wcwidth==0.1.7
