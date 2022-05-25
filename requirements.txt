@@ -72,7 +72,7 @@ pycparser==2.19
 pydot==1.4.1
 Pygments==2.4.2
 pygpu==0.7.6
-PyJWT==1.6.4
+PyJWT==2.4.0
 pyparsing==2.4.0
 pyrsistent==0.14.11
 PySoundFile==0.9.0.post1
